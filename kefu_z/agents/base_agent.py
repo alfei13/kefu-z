@@ -111,9 +111,8 @@ class BaseAgent(ABC):
                     tool_args = {}
 
                 state = self.state_mgr.get_or_create(session_id)
-                if state.user_id and "user_id" not in tool_args:
-                    if tool_name in ["query_orders", "query_coupons", "create_aftersale", "query_aftersale"]:
-                        tool_args["user_id"] = state.user_id
+                if state.user_id and tool_name in ["query_orders", "query_coupons", "create_aftersale", "query_aftersale"]:
+                    tool_args["user_id"] = state.user_id
 
                 logger.info("tool_call", agent=self.name, tool=tool_name, args=tool_args)
                 result = self.mcp.call(tool_name, tool_args)

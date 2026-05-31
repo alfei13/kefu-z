@@ -32,3 +32,4 @@
 - LLM返回的JSON可能被markdown代码块包裹，需要strip处理
 - LLM返回的JSON字段可能是dict/list而非string，需要isinstance检查
 - Gradio默认多线程，全局变量需要线程安全保护
+- **LLM生成的tool_call参数可能包含错误的user_id**：必须始终用对话状态中的user_id覆盖，不能信任LLM生成的user_id值
