@@ -1,0 +1,238 @@
+{
+  "E001": {
+    "id": "E001",
+    "title": "基础设施",
+    "description": "项目骨架、配置、LLM/MCP客户端、对话管理",
+    "level": "EPIC",
+    "status": "PENDING",
+    "children": ["F001", "F002"],
+    "progress": 0
+  },
+  "F001": {
+    "id": "F001",
+    "title": "Python项目骨架",
+    "description": "项目结构、配置、依赖管理",
+    "level": "FEATURE",
+    "status": "PENDING",
+    "parent_id": "E001",
+    "children": ["T001"],
+    "dependencies": [],
+    "progress": 0
+  },
+  "T001": {
+    "id": "T001",
+    "title": "Python项目初始化",
+    "description": "创建kefu_z包结构、setup.py、config.py、.env配置、依赖安装",
+    "level": "TASK",
+    "status": "PENDING",
+    "parent_id": "F001",
+    "dependencies": [],
+    "test_criteria": "pip install -e . 成功，from kefu_z.config import Config 成功",
+    "parallel_with": []
+  },
+  "F002": {
+    "id": "F002",
+    "title": "核心客户端模块",
+    "description": "LLM客户端、MCP客户端、对话记忆、对话状态管理",
+    "level": "FEATURE",
+    "status": "PENDING",
+    "parent_id": "E001",
+    "children": ["T002", "T003", "T004", "T005"],
+    "dependencies": ["F001"],
+    "progress": 0
+  },
+  "T002": {
+    "id": "T002",
+    "title": "LLM客户端模块",
+    "description": "LLMClient类：chat/chat_json/chat_with_tools，使用OpenAI兼容接口连接DashScope，含结构化日志",
+    "level": "TASK",
+    "status": "PENDING",
+    "parent_id": "F002",
+    "dependencies": ["T001"],
+    "test_criteria": "from kefu_z.llm_client import LLMClient 成功，chat_with_tools返回正确格式",
+    "parallel_with": []
+  },
+  "T003": {
+    "id": "T003",
+    "title": "MCP客户端模块",
+    "description": "MCPClient类：call(tool_name, params)统一调用HTTP接口，get_tools_definition()返回8个工具定义，标准role:tool消息格式",
+    "level": "TASK",
+    "status": "PENDING",
+    "parent_id": "F002",
+    "dependencies": ["T001"],
+    "test_criteria": "from kefu_z.mcp_client import MCPClient 成功，get_tools_definition()返回8个工具",
+    "parallel_with": ["T002"]
+  },
+  "T004": {
+    "id": "T004",
+    "title": "对话记忆模块",
+    "description": "ConversationMemory类：add_message/get_messages/get_recent_messages，支持TTL过期+最大消息数+LRU淘汰",
+    "level": "TASK",
+    "status": "PENDING",
+    "parent_id": "F002",
+    "dependencies": ["T001"],
+    "test_criteria": "from kefu_z.conversation_memory import ConversationMemory 成功，TTL过期自动清理",
+    "parallel_with": ["T002", "T003"]
+  },
+  "T005": {
+    "id": "T005",
+    "title": "对话状态管理器",
+    "description": "DialogStateManager类：维护current_agent/dialog_phase/slots/pending_confirmation/handoff_history/emotion，支持槽位填充",
+    "level": "TASK",
+    "status": "PENDING",
+    "parent_id": "F002",
+    "dependencies": ["T001"],
+    "test_criteria": "from kefu_z.dialog_state import DialogStateManager 成功，槽位填充和状态流转正确",
+    "parallel_with": ["T002", "T003", "T004"]
+  },
+  "E002": {
+    "id": "E002",
+    "title": "多智能体系统",
+    "description": "Router、7个专业Agent、Handoff机制、ReAct循环",
+    "level": "EPIC",
+    "status": "PENDING",
+    "children": ["F003", "F004"],
+    "progress": 0
+  },
+  "F003": {
+    "id": "F003",
+    "title": "Agent基础框架",
+    "description": "BaseAgent(含ReAct循环)、RouterAgent、情感分析、HandoffRequest",
+    "level": "FEATURE",
+    "status": "PENDING",
+    "parent_id": "E002",
+    "children": ["T006", "T007", "T008"],
+    "dependencies": ["F002"],
+    "progress": 0
+  },
+  "T006": {
+    "id": "T006",
+    "title": "BaseAgent + ReAct循环 + 工具执行器",
+    "description": "BaseAgent抽象类：含ReAct循环（最多5轮工具调用），HandoffRequest数据类，ToolExecutor工具执行器，标准role:tool消息格式",
+    "level": "TASK",
+    "status": "PENDING",
+    "parent_id": "F003",
+    "dependencies": ["T002", "T003", "T004", "T005"],
+    "test_criteria": "from kefu_z.agents.base_agent import BaseAgent, HandoffRequest 成功",
+    "parallel_with": []
+  },
+  "T007": {
+    "id": "T007",
+    "title": "意图路由Agent + 情感分析",
+    "description": "RouterAgent：LLM分类返回{agent, confidence, emotion}，低置信度降级到chitchat，愤怒时建议转人工",
+    "level": "TASK",
+    "status": "PENDING",
+    "parent_id": "F003",
+    "dependencies": ["T006"],
+    "test_criteria": "from kefu_z.agents.router_agent import RouterAgent 成功，路由返回合法Agent名",
+    "parallel_with": []
+  },
+  "T008": {
+    "id": "T008",
+    "title": "7个专业Agent实现",
+    "description": "PresaleAgent/ProductAgent/OrderAgent/CouponAgent/AftersaleAgent/ChitchatAgent/HumanHandoffAgent，含槽位填充和敏感操作确认",
+    "level": "TASK",
+    "status": "PENDING",
+    "parent_id": "F003",
+    "dependencies": ["T006"],
+    "test_criteria": "7个Agent均可import，各Agent有正确的工具绑定",
+    "parallel_with": ["T007"]
+  },
+  "F004": {
+    "id": "F004",
+    "title": "Orchestrator网关",
+    "description": "Orchestrator编排器：协调Router/Agent/Handoff/状态管理",
+    "level": "FEATURE",
+    "status": "PENDING",
+    "parent_id": "E002",
+    "children": ["T009"],
+    "dependencies": ["F003"],
+    "progress": 0
+  },
+  "T009": {
+    "id": "T009",
+    "title": "Orchestrator编排器",
+    "description": "Orchestrator类：接收消息→情感分析→路由→Agent处理→Handoff协调→返回回复，最多3次Handoff，结构化日志",
+    "level": "TASK",
+    "status": "PENDING",
+    "parent_id": "F004",
+    "dependencies": ["T007", "T008"],
+    "test_criteria": "from kefu_z.gateway import Orchestrator 成功，process()返回字符串回复",
+    "parallel_with": []
+  },
+  "E003": {
+    "id": "E003",
+    "title": "后端服务与前端",
+    "description": "Java Mock服务、Gradio界面、集成测试",
+    "level": "EPIC",
+    "status": "PENDING",
+    "children": ["F005", "F006", "F007"],
+    "progress": 0
+  },
+  "F005": {
+    "id": "F005",
+    "title": "Java Mock服务",
+    "description": "Spring Boot + H2 Mock后端，4个Controller + 初始数据",
+    "level": "FEATURE",
+    "status": "PENDING",
+    "parent_id": "E003",
+    "children": ["T010"],
+    "dependencies": [],
+    "progress": 0
+  },
+  "T010": {
+    "id": "T010",
+    "title": "Java Mock服务",
+    "description": "Spring Boot 3.2 + Java 17 + H2，4个Model(Product/Order/Coupon/AfterSaleRequest)+4个Repository+4个Controller+data.sql初始化数据，user_id统一Integer，增加物流字段",
+    "level": "TASK",
+    "status": "PENDING",
+    "parent_id": "F005",
+    "dependencies": [],
+    "test_criteria": "mvn spring-boot:run 启动成功，curl GET /api/products 返回200",
+    "parallel_with": ["T001", "T002", "T003", "T004", "T005"]
+  },
+  "F006": {
+    "id": "F006",
+    "title": "Gradio Web界面",
+    "description": "对话界面 + 满意度评价 + 示例问题",
+    "level": "FEATURE",
+    "status": "PENDING",
+    "parent_id": "E003",
+    "children": ["T011"],
+    "dependencies": ["F004"],
+    "progress": 0
+  },
+  "T011": {
+    "id": "T011",
+    "title": "Gradio Web界面",
+    "description": "Gradio Blocks：对话界面+用户ID输入+满意度评价(👍/👎)+示例问题+情感状态显示，服务器绑定127.0.0.1",
+    "level": "TASK",
+    "status": "PENDING",
+    "parent_id": "F006",
+    "dependencies": ["T009"],
+    "test_criteria": "python main.py 启动成功，浏览器可访问",
+    "parallel_with": []
+  },
+  "F007": {
+    "id": "F007",
+    "title": "集成测试与启动脚本",
+    "description": "单元测试、集成测试、一键启动脚本",
+    "level": "FEATURE",
+    "status": "PENDING",
+    "parent_id": "E003",
+    "children": ["T012"],
+    "dependencies": ["F005", "F006"],
+    "progress": 0
+  },
+  "T012": {
+    "id": "T012",
+    "title": "集成测试+启动脚本",
+    "description": "pytest单元测试(测试各模块)+start.sh一键启动(Java+Python)+main.py入口",
+    "level": "TASK",
+    "status": "PENDING",
+    "parent_id": "F007",
+    "dependencies": ["T010", "T011"],
+    "test_criteria": "pytest全部通过，start.sh启动两个服务",
+    "parallel_with": []
+  }
+}
