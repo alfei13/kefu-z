@@ -43,7 +43,7 @@ def main():
         with gr.Row():
             user_id_input = gr.Number(value=1, label="用户ID", precision=0, minimum=1)
 
-        chatbot = gr.Chatbot(height=500, show_copy_button=True)
+        chatbot = gr.Chatbot(height=500)
         msg_input = gr.Textbox(
             placeholder="请输入您的问题，例如：我想买手机、查订单、有优惠券吗、我要退货...",
             show_label=False,

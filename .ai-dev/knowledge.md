@@ -13,8 +13,11 @@
 - DashScope API需要OpenAI兼容接口：api_base=https://dashscope.aliyuncs.com/compatible-mode/v1
 - .env文件不能提交git，API Key只能从环境变量读取
 - Gradio 5.x不支持type='messages'参数，使用tuple格式
+- Gradio不支持show_copy_button参数（某些版本），需移除
 - 服务器绑定127.0.0.1而非0.0.0.0，避免代理干扰
 - curl冒烟测试需加--noproxy '*'绕过代理
+- Java Mock服务需用JDK 17运行（JDK 26与Lombok不兼容）
+- 端口7860可能被之前的Gradio进程占用，需先kill
 
 ## 项目约定
 - Python代码遵循PEP8
