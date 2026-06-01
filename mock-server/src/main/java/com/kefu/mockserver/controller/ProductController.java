@@ -46,7 +46,7 @@ public class ProductController {
 
     @GetMapping("/search")
     public ResponseEntity<List<Product>> searchProducts(@RequestParam String query) {
-        List<Product> results = productRepository.findByNameContaining(query);
+        List<Product> results = productRepository.searchByKeyword(query);
         return ResponseEntity.ok(results);
     }
 }

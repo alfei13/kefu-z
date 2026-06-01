@@ -62,7 +62,7 @@ class Orchestrator:
 
             if state.current_agent and state.turn_count > 1 and emotion != "angry":
                 current = state.current_agent
-                if current in self.agents and current != "chitchat":
+                if current in self.agents and current != "chitchat" and confidence < 0.9:
                     agent_name = current
                     logger.info("keep_current_agent", session_id=session_id, agent=current)
 
