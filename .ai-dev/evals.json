@@ -1,0 +1,23 @@
+{
+  "T001": {"functionality": 5, "quality": 4, "security": 5, "maintainability": 4, "passed": true},
+  "T002": {"functionality": 5, "quality": 4, "security": 5, "maintainability": 4, "passed": true},
+  "T003": {"functionality": 5, "quality": 4, "security": 5, "maintainability": 4, "passed": true},
+  "T004": {"functionality": 5, "quality": 4, "security": 5, "maintainability": 4, "passed": true},
+  "T005": {"functionality": 5, "quality": 4, "security": 5, "maintainability": 4, "passed": true},
+  "T006": {"functionality": 5, "quality": 4, "security": 4, "maintainability": 4, "passed": true},
+  "T007": {"functionality": 4, "quality": 4, "security": 5, "maintainability": 4, "passed": true},
+  "T008": {"functionality": 5, "quality": 4, "security": 4, "maintainability": 4, "passed": true},
+  "T009": {"functionality": 5, "quality": 4, "security": 5, "maintainability": 4, "passed": true},
+  "T010": {"functionality": 5, "quality": 4, "security": 4, "maintainability": 4, "passed": true},
+  "T011": {"functionality": 4, "quality": 4, "security": 5, "maintainability": 4, "passed": true},
+  "T012": {"functionality": 5, "quality": 4, "security": 5, "maintainability": 4, "passed": true},
+  "project_level": {
+    "install": true,
+    "tests": true,
+    "startup": true,
+    "smoke": true,
+    "browser": true,
+    "security": true,
+    "knowledge": true
+  }
+}

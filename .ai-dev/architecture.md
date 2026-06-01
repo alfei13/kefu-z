@@ -110,66 +110,72 @@ graph LR
 ### Java Mock服务 - H2内存数据库
 
 **products表**：
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| id | INTEGER PK | 商品ID |
-| name | VARCHAR(200) | 商品名称 |
-| category | VARCHAR(50) | 分类 |
-| price | DECIMAL(10,2) | 价格 |
-| stock | INTEGER | 库存 |
-| description | TEXT | 描述 |
-| specs | TEXT | 规格参数JSON |
-| image_url | VARCHAR(500) | 图片URL |
+
+| 字段          | 类型            | 说明       |
+| ----------- | ------------- | -------- |
+| id          | INTEGER PK    | 商品ID     |
+| name        | VARCHAR(200)  | 商品名称     |
+| category    | VARCHAR(50)   | 分类       |
+| price       | DECIMAL(10,2) | 价格       |
+| stock       | INTEGER       | 库存       |
+| description | TEXT          | 描述       |
+| specs       | TEXT          | 规格参数JSON |
+| image\_url  | VARCHAR(500)  | 图片URL    |
 
 **orders表**：
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| id | INTEGER PK | 订单ID |
-| user_id | INTEGER | 用户ID（统一为整数） |
-| product_id | INTEGER | 商品ID |
-| product_name | VARCHAR(200) | 商品名称（冗余） |
-| quantity | INTEGER | 数量 |
-| total_price | DECIMAL(10,2) | 总价 |
-| status | VARCHAR(20) | 状态(pending/paid/shipped/delivered/cancelled) |
-| tracking_no | VARCHAR(50) | 物流单号 |
-| tracking_company | VARCHAR(50) | 物流公司 |
-| created_at | TIMESTAMP | 创建时间 |
+
+| 字段                | 类型            | 说明                                           |
+| ----------------- | ------------- | -------------------------------------------- |
+| id                | INTEGER PK    | 订单ID                                         |
+| user\_id          | INTEGER       | 用户ID（统一为整数）                                  |
+| product\_id       | INTEGER       | 商品ID                                         |
+| product\_name     | VARCHAR(200)  | 商品名称（冗余）                                     |
+| quantity          | INTEGER       | 数量                                           |
+| total\_price      | DECIMAL(10,2) | 总价                                           |
+| status            | VARCHAR(20)   | 状态(pending/paid/shipped/delivered/cancelled) |
+| tracking\_no      | VARCHAR(50)   | 物流单号                                         |
+| tracking\_company | VARCHAR(50)   | 物流公司                                         |
+| created\_at       | TIMESTAMP     | 创建时间                                         |
 
 **coupons表**：
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| id | INTEGER PK | 优惠券ID |
-| code | VARCHAR(20) | 优惠码 |
-| type | VARCHAR(20) | 类型(fixed/percent) |
-| value | DECIMAL(10,2) | 面值/折扣 |
-| min_purchase | DECIMAL(10,2) | 最低消费 |
-| valid_until | TIMESTAMP | 有效期 |
-| used | BOOLEAN | 是否已用 |
-| user_id | INTEGER | 所属用户ID |
 
-**after_sale_requests表**：
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| id | INTEGER PK | 售后ID |
-| order_id | INTEGER | 订单ID |
-| user_id | INTEGER | 用户ID |
-| type | VARCHAR(20) | 类型(refund/exchange/repair) |
-| reason | TEXT | 原因 |
-| status | VARCHAR(20) | 状态(pending/approved/rejected/completed) |
-| created_at | TIMESTAMP | 创建时间 |
+| 字段            | 类型            | 说明                |
+| ------------- | ------------- | ----------------- |
+| id            | INTEGER PK    | 优惠券ID             |
+| code          | VARCHAR(20)   | 优惠码               |
+| type          | VARCHAR(20)   | 类型(fixed/percent) |
+| value         | DECIMAL(10,2) | 面值/折扣             |
+| min\_purchase | DECIMAL(10,2) | 最低消费              |
+| valid\_until  | TIMESTAMP     | 有效期               |
+| used          | BOOLEAN       | 是否已用              |
+| user\_id      | INTEGER       | 所属用户ID            |
+
+**after\_sale\_requests表**：
+
+| 字段          | 类型          | 说明                                      |
+| ----------- | ----------- | --------------------------------------- |
+| id          | INTEGER PK  | 售后ID                                    |
+| order\_id   | INTEGER     | 订单ID                                    |
+| user\_id    | INTEGER     | 用户ID                                    |
+| type        | VARCHAR(20) | 类型(refund/exchange/repair)              |
+| reason      | TEXT        | 原因                                      |
+| status      | VARCHAR(20) | 状态(pending/approved/rejected/completed) |
+| created\_at | TIMESTAMP   | 创建时间                                    |
 
 **V2变更**：
-- user_id统一为INTEGER类型（修复kefu中String/Integer不一致问题）
-- orders增加product_name冗余字段（减少联表查询）
-- orders增加tracking_no/tracking_company字段（支持物流查询）
-- coupons增加user_id字段（支持按用户查询）
-- products增加image_url字段
+
+- user\_id统一为INTEGER类型（修复kefu中String/Integer不一致问题）
+- orders增加product\_name冗余字段（减少联表查询）
+- orders增加tracking\_no/tracking\_company字段（支持物流查询）
+- coupons增加user\_id字段（支持按用户查询）
+- products增加image\_url字段
 
 ## 5. API接口契约
 
 ### Java Mock服务 REST API
 
 #### 商品服务
+
 ```
 GET /api/products
 请求: ?category={category}&page=0&size=20
@@ -185,6 +191,7 @@ GET /api/products/search
 ```
 
 #### 订单服务
+
 ```
 GET /api/orders
 请求: ?user_id={userId}&status={status?}
@@ -196,6 +203,7 @@ GET /api/orders/{id}
 ```
 
 #### 优惠券服务
+
 ```
 GET /api/coupons
 请求: ?user_id={userId}
@@ -212,6 +220,7 @@ POST /api/coupons/use
 ```
 
 #### 售后服务
+
 ```
 GET /api/aftersale
 请求: ?user_id={userId}&order_id={orderId?}
@@ -329,25 +338,26 @@ PUT /api/aftersale/{id}
 
 ## 6. 技术选型
 
-| 组件 | 技术 | 理由 |
-|------|------|------|
-| AI Agent框架 | Python自研 | 轻量MVP，不依赖LangChain等重框架 |
-| LLM | DashScope qwen-plus | 阿里云百炼，OpenAI兼容接口 |
-| 意图路由 | LLM分类 + 情感分析 | 利用LLM理解能力做意图识别+情感判断 |
-| Agent协作 | Handoff模式 | Agent间可转交对话+传递上下文 |
-| 工具调用 | ReAct循环 | 支持多轮工具调用，直到收集足够信息 |
-| 对话状态 | DialogStateManager | 维护槽位信息、当前Agent、对话阶段 |
-| MCP客户端 | Python HTTP | 通过HTTP调用Java Mock服务模拟MCP |
-| Mock后端 | Spring Boot 3.2 + H2 | Java生态标准，内嵌数据库无需安装 |
-| Web界面 | Gradio | 快速搭建对话式UI + 满意度评价 |
-| 对话记忆 | Python dict + TTL | 内存存储+过期清理，按session_id隔离 |
-| 日志 | structlog | 结构化日志，便于追踪和调试 |
+| 组件         | 技术                   | 理由                       |
+| ---------- | -------------------- | ------------------------ |
+| AI Agent框架 | Python自研             | 轻量MVP，不依赖LangChain等重框架   |
+| LLM        | DashScope qwen-plus  | 阿里云百炼，OpenAI兼容接口         |
+| 意图路由       | LLM分类 + 情感分析         | 利用LLM理解能力做意图识别+情感判断      |
+| Agent协作    | Handoff模式            | Agent间可转交对话+传递上下文        |
+| 工具调用       | ReAct循环              | 支持多轮工具调用，直到收集足够信息        |
+| 对话状态       | DialogStateManager   | 维护槽位信息、当前Agent、对话阶段      |
+| MCP客户端     | Python HTTP          | 通过HTTP调用Java Mock服务模拟MCP |
+| Mock后端     | Spring Boot 3.2 + H2 | Java生态标准，内嵌数据库无需安装       |
+| Web界面      | Gradio               | 快速搭建对话式UI + 满意度评价        |
+| 对话记忆       | Python dict + TTL    | 内存存储+过期清理，按session\_id隔离 |
+| 日志         | structlog            | 结构化日志，便于追踪和调试            |
 
 ## 7. 多智能体通讯机制（V2核心升级）
 
 ### 7.1 Orchestrator编排器（替代简单Gateway）
 
 Orchestrator是系统的中央控制器，负责：
+
 1. 接收用户消息
 2. 调用情感分析模块判断用户情绪
 3. 调用Router Agent进行意图路由
@@ -368,6 +378,7 @@ class HandoffRequest:
 ```
 
 Handoff流程：
+
 1. Agent A处理用户消息时，发现需要Agent B的能力
 2. Agent A返回HandoffRequest而非最终回复
 3. Orchestrator接收HandoffRequest，将上下文传递给Agent B
@@ -407,6 +418,7 @@ class DialogState:
 ```
 
 对话阶段流转：
+
 ```
 greeting → collecting → executing → confirming → closing
               ↑             ↓            ↓
@@ -416,6 +428,7 @@ greeting → collecting → executing → confirming → closing
 ### 7.5 情感分析（V2新增）
 
 在路由之前，先进行情感分析：
+
 - 使用LLM判断用户情绪：neutral/happy/angry/confused
 - 愤怒(angry)时：自动建议转人工，不强制路由到AI Agent
 - 困惑(confused)时：使用更详细的解释风格
@@ -425,36 +438,39 @@ greeting → collecting → executing → confirming → closing
 
 当用户请求需要特定信息但未提供时，Agent主动追问：
 
-| Agent | 必需槽位 | 追问示例 |
-|-------|---------|---------|
-| OrderAgent | user_id | "请问您的用户ID是多少？" |
-| AftersaleAgent | order_id, type, reason | "请问是哪个订单需要售后？是退款、换货还是维修？" |
-| CouponAgent | user_id 或 code | "请提供您的用户ID或优惠码" |
+| Agent          | 必需槽位                    | 追问示例                      |
+| -------------- | ----------------------- | ------------------------- |
+| OrderAgent     | user\_id                | "请问您的用户ID是多少？"            |
+| AftersaleAgent | order\_id, type, reason | "请问是哪个订单需要售后？是退款、换货还是维修？" |
+| CouponAgent    | user\_id 或 code         | "请提供您的用户ID或优惠码"           |
 
 ### 7.7 敏感操作确认（V2新增）
 
 以下操作需要用户二次确认后才执行：
-- 创建售后申请（create_aftersale）
-- 使用优惠券（use_coupon）
+
+- 创建售后申请（create\_aftersale）
+- 使用优惠券（use\_coupon）
 
 流程：
+
 1. Agent收集完槽位信息后，向用户展示确认信息
 2. 用户确认后，Agent才调用MCP工具执行操作
 3. 用户取消则放弃操作
 
 ## 8. 与kefu V1的关键差异
 
-| 维度 | kefu V1 | kefu-z V2 |
-|------|---------|-----------|
-| 路由 | 单次Router分类 | Router + 情感分析 + 对话状态 |
-| 工具调用 | 单轮工具调用 | ReAct循环（最多5轮） |
-| Agent协作 | 完全隔离 | Handoff机制（最多3次） |
-| Function Calling | 伪装user消息 | 标准role:"tool"消息 |
-| 对话管理 | 无状态 | DialogStateManager + 槽位填充 |
-| 敏感操作 | 直接执行 | 二次确认机制 |
-| 情感识别 | 无 | LLM情感分析 |
-| 人工转接 | 无 | HumanHandoffAgent |
-| 日志 | 无 | structlog结构化日志 |
-| 会话管理 | 无过期 | TTL + 容量控制 |
-| 用户ID | String/Integer混用 | 统一Integer |
-| 满意度评价 | 无 | 👍/👎评价 |
+| 维度               | kefu V1          | kefu-z V2                 |
+| ---------------- | ---------------- | ------------------------- |
+| 路由               | 单次Router分类       | Router + 情感分析 + 对话状态      |
+| 工具调用             | 单轮工具调用           | ReAct循环（最多5轮）             |
+| Agent协作          | 完全隔离             | Handoff机制（最多3次）           |
+| Function Calling | 伪装user消息         | 标准role:"tool"消息           |
+| 对话管理             | 无状态              | DialogStateManager + 槽位填充 |
+| 敏感操作             | 直接执行             | 二次确认机制                    |
+| 情感识别             | 无                | LLM情感分析                   |
+| 人工转接             | 无                | HumanHandoffAgent         |
+| 日志               | 无                | structlog结构化日志            |
+| 会话管理             | 无过期              | TTL + 容量控制                |
+| 用户ID             | String/Integer混用 | 统一Integer                 |
+| 满意度评价            | 无                | 👍/👎评价                   |
+
