@@ -1,5 +1,6 @@
 .ai-dev/logs/
 .ai-dev/*.log
+.ai-dev/auto-memory/
 .env
 __pycache__/
 *.pyc

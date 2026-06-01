@@ -1,12 +1,14 @@
 {
   "project_name": "kefu-z",
+  "mode": "standard",
   "phase": "completed",
   "progress": {"completed": 12, "total": 12, "percentage": 100.0},
   "current_task": null,
-  "last_updated": "2026-06-01T15:35:00",
+  "last_updated": "2026-06-01T16:00:00",
   "last_commit": "13993c5",
   "blocked_tasks": [],
   "session_count": 1,
   "initializer_done": true,
-  "tech_validation_passed": true
+  "tech_validation_passed": true,
+  "context_compact_count": 0
 }
